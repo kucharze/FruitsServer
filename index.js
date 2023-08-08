@@ -16,7 +16,10 @@ app.get("/fruits", (req, res) => {
 });
 
 app.get("/fruits/:indexOfFruitsArray", (req, res) => {
-  res.send(fruits[req.params.indexOfFruitsArray]);
+  res.render("Show", {
+    //How to pass to components as props
+    fruit: fruits[req.params.indexOfFruitsArray],
+  });
 });
 
 app.listen("3000", (req, res) => {
