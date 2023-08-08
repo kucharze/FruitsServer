@@ -6,7 +6,7 @@ function Show(props) {
     <div>
       <h1>Show page</h1>
       <h3>The {fruit.name} is {fruit.color}</h3>
-      <h1>{
+      <h1 style={{color:'green'}}>{
             fruit.readyToEat ? "Its ready to eat" : "It isn't ready yet"
         }</h1>
     </div>
