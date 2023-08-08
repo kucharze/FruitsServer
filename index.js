@@ -4,6 +4,10 @@ const app = express();
 
 const fruits = require("./models/fruits");
 
+//Middleware
+app.set("view engine", "jsx");
+app.engine("jsx", require("express-react-views").createEngine());
+
 //Routes
 
 //Index all fruits
