@@ -15,3 +15,5 @@ const fruits = [
     readyToEat: true,
   },
 ];
+
+module.exports = fruits;
