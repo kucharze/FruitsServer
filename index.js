@@ -25,3 +25,4 @@ app.get("/fruits/:indexOfFruitsArray", (req, res) => {
 app.listen("3000", (req, res) => {
   console.log(`Server now listening on port 3000`);
 });
+// /npm install jsx-view-engine react react-dom --save
