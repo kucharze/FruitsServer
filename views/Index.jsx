@@ -9,8 +9,8 @@ function Index(props) {
         fruits.map((item,i)=>{
             return(
                 <a href={`/fruits/${i}`}>
-            <h2>{item.name}</h2>
-            </a>
+                    <h2>{item.name}</h2>
+                </a>
             )
            
         })
