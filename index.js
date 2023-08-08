@@ -12,7 +12,7 @@ app.engine("jsx", require("express-react-views").createEngine());
 
 //Index all fruits
 app.get("/fruits", (req, res) => {
-  res.send(fruits);
+  res.render("Index", { fruitList: fruits });
 });
 
 app.get("/fruits/:indexOfFruitsArray", (req, res) => {
