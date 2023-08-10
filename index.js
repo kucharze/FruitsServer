@@ -10,6 +10,7 @@ app.engine("jsx", require("express-react-views").createEngine());
 
 //Tell express to use middleware
 //Encode the url to read in a acertain way
+//This is so we can use the post request to read body data
 app.use(express.urlencoded({ extended: false }));
 
 //Routes
@@ -38,7 +39,7 @@ app.post("/fruits", (req, res) => {
   }
   fruits.push(req.body);
   console.log(fruits);
-  res.send("data received");
+  res.send("<h1>You data has been received</h1>");
 });
 
 app.get("/fruits/:indexOfFruitsArray", (req, res) => {
