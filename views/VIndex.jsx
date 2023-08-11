@@ -1,18 +1,18 @@
 import React from 'react'
 
 function VIndex(props) {
-    const fruits = props.veggies
+    const veggies = props.veggies
   return (
     <div>
         <h2>Veggie Index</h2>
         <nav>
-          <a href='/fruits/new'>Create a new Veggie</a>
+          <a href='/veggies/new'>Create a new Veggie</a>
         </nav>
       {
-        fruits && 
-        fruits.map((item,i)=>{
+        veggies && 
+        veggies.map((item,i)=>{
             return(
-                <a href={`/fruits/${item._id}`} key={i}>
+                <a href={`/veggies/${item._id}`} key={i}>
                     <h2>{item.name}</h2>
                 </a>
             )

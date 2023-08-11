@@ -4,6 +4,7 @@ const app = express();
 const mongoose = require("mongoose");
 
 const Fruit = require("./models/fruits");
+const Veggie = require("./models/veggies");
 
 require("dotenv").config();
 //Middleware
@@ -51,9 +52,21 @@ app.get("/fruits", (req, res) => {
   });
 });
 
+app.get("/veggies", (req, res) => {
+  Veggie.find({}).then((allVeg) => {
+    res.render("VIndex", {
+      veggies: allVeg,
+    });
+  });
+});
+
 //put this above your Show route
 app.get("/fruits/new", (req, res) => {
   res.render("New");
+});
+
+app.get("/Veggies/new", (req, res) => {
+  res.render("NewVeggie");
 });
 
 // app.post("/fruits", async (req, res) => {
@@ -107,10 +120,30 @@ app.post("/fruits", async (req, res) => {
   res.redirect("/fruits");
 });
 
+app.post("/veggies", async (req, res) => {
+  if (req.body.readyToEat === "on") {
+    req.body.readyToEat = true;
+  } else {
+    req.body.readyToEat = false;
+  }
+  const newVeggie = await Veggie.create(req.body);
+  //await res.send(newFruit);
+  //console.log(fruits);
+  res.redirect("/veggies");
+});
+
 app.get("/fruits/:id", async (req, res) => {
   const eachFruit = await Fruit.findById(req.params.id);
   await res.render("Show", {
     fruit: eachFruit,
+  });
+});
+
+app.get("/veggies/:id", async (req, res) => {
+  const eachVeg = await Veggie.findById(req.params.id);
+  console.log(eachVeg);
+  await res.render("ShowVeg", {
+    veggie: eachVeg,
   });
 });
 
