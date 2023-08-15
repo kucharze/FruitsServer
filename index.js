@@ -19,6 +19,13 @@ app.use(express.urlencoded({ extended: false }));
 //Allows for use of res.json
 app.use(express.json());
 
+//include the method-override package place this where you instructor places it
+const methodOverride = require("method-override");
+//...
+//after app has been defined
+//use methodOverride.  We'll be adding a query parameter to our delete form named _method
+app.use(methodOverride("_method"));
+
 //Routes
 app.use((req, res, next) => {
   console.log("I run for all routes");
@@ -34,16 +41,6 @@ mongoose.connection.once("open", () => {
   console.log("connected to mongo");
 });
 
-//Index all fruits
-// app.get("/fruits", (req, res) => {
-//   // res.render("Index", { fruitList: fruits });
-//   // res.json({ fruits });
-//   Fruit.find({}).then((allFruits) => {
-//     res.render("Index", {
-//       fruits: allFruits,
-//     });
-//   });
-// });
 app.get("/fruits", (req, res) => {
   Fruit.find({}).then((allFruits) => {
     res.render("Index", {
@@ -67,6 +64,15 @@ app.get("/fruits/new", (req, res) => {
 
 app.get("/Veggies/new", (req, res) => {
   res.render("NewVeggie");
+});
+//seed route
+//add in a lot of data at once
+app.get("/pokemong/seed", async () => {
+  //deletteing all current data
+  Fruit.deleteMany({});
+
+  Fruit.create(OurFruiteData);
+  res.redirect("/");
 });
 
 // app.post("/fruits", async (req, res) => {
@@ -107,6 +113,41 @@ app.get("/Veggies/new", (req, res) => {
 //     afruit: eachFruit,
 //   });
 // });
+
+app.delete("/fruits/:id", async (req, res) => {
+  Fruit.findByIdAndRemove(req.params.id).then((err, data) => {
+    res.redirect("/fruits"); //redirect back to fruits index
+  });
+});
+
+app.put("/fruits/:id", async (req, res) => {
+  if (req.body.readyToEat === "on") {
+    req.body.readyToEat = true;
+  } else {
+    req.body.readyToEat = false;
+  }
+
+  Fruit.findByIdAndUpdate(req.params.id, req.body).then((err, data) => {
+    res.redirect("/fruits"); //redirect back to fruits index
+  });
+});
+
+app.get("/fruits/:id/edit", async (req, res) => {
+  // const FoundFruit = await Fruit.findById(req.params.id)
+  console.log("truing to find");
+  Fruit.findById(req.params.id).then((foundFruit) => {
+    //find the fruit
+    console.log("truing to find");
+    // if (!err) {
+    console.log("try to find");
+    res.render("Edit", {
+      fruit: foundFruit, //pass in the found fruit so we can prefill the form
+    });
+    // } else {
+    //   res.send({ msg: err.message });
+    // }
+  });
+});
 
 app.post("/fruits", async (req, res) => {
   if (req.body.readyToEat === "on") {
