@@ -67,7 +67,7 @@ app.get("/Veggies/new", (req, res) => {
 });
 //seed route
 //add in a lot of data at once
-app.get("/pokemong/seed", async () => {
+app.get("/fruit/seed", async () => {
   //deletteing all current data
   Fruit.deleteMany({});
 
